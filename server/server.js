@@ -4,6 +4,8 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http); // Socket.IO
 const port = 3000;
 const Game = require("./gameLogic/game");
+const path = require("path");
+
 let rooms = {}; // This will hold the state of all game rooms
 let games = {};
 
@@ -11,6 +13,8 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
   res.send("Hello World!");
 });
+
+app.use(express.static(path.join(__dirname, "public")));
 
 io.on("connection", (socket) => {
   console.log("a user connected");
